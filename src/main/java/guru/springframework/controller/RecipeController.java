@@ -18,6 +18,7 @@ import javax.validation.Valid;
 public class RecipeController {
 
     private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
+    private static final String RECIPE = "recipe";
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
@@ -27,21 +28,21 @@ public class RecipeController {
 
     @GetMapping("recipe/{id}/show")
     public String showById(@PathVariable String id, Model model) {
-        model.addAttribute("recipe", recipeService.findById(new Long(id)));
+        model.addAttribute(RECIPE, recipeService.findById(Long.valueOf(id)));
 
         return "recipe/show";
     }
 
     @GetMapping("recipe/new")
     public String newRecipe(Model model) {
-        model.addAttribute("recipe", new RecipeCommand());
+        model.addAttribute(RECIPE, new RecipeCommand());
 
         return "recipe/recipeForm";
     }
 
     @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
-        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+        model.addAttribute(RECIPE, recipeService.findCommandById(Long.valueOf(id)));
 
         return RECIPE_RECIPEFORM_URL;
     }
@@ -50,9 +51,7 @@ public class RecipeController {
     public String saveOrUpdateRecipe(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.error(objectError.toString());
-            });
+            bindingResult.getAllErrors().forEach(objectError -> log.error(objectError.toString()));
             return RECIPE_RECIPEFORM_URL;
         }
 

@@ -14,7 +14,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
@@ -36,7 +37,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipeByIdTest(){
+    public void getRecipeByIdTest() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -61,12 +62,12 @@ public class RecipeServiceImplTest {
 
         Set<Recipe> recipes = recipeService.getRecipes();
 
-        assertEquals(recipes.size(), 1);
+        assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
     }
 
     @Test
-    public void testDeleteById(){
+    public void testDeleteById() {
         Long idToDelete = 2L;
         recipeService.deleteById(idToDelete);
 
@@ -74,7 +75,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void getRecipeByIdTestNotFound(){
+    public void getRecipeByIdTestNotFound() {
         Optional<Recipe> recipeOptional = Optional.empty();
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);

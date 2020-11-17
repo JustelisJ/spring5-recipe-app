@@ -1,9 +1,5 @@
 package guru.springframework.controller;
 
-import guru.springframework.domain.Category;
-import guru.springframework.domain.UnitOfMeasure;
-import guru.springframework.repositories.CategoryRepository;
-import guru.springframework.repositories.UnitOfMeasureRepository;
 import guru.springframework.service.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,7 +17,7 @@ public class IndexController {
     }
 
     @GetMapping({"", "/", "/index"})
-    public String getIndexPage(Model model){
+    public String getIndexPage(Model model) {
 
         model.addAttribute("recipes", recipeService.getRecipes());
 

@@ -20,13 +20,13 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public void saveImageFile(Long recipeId, MultipartFile image) {
-        try{
-            Recipe recipe = recipeRepository.findById(recipeId).get();
+        try {
+            Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(IOException::new);
 
             Byte[] byteObject = new Byte[image.getBytes().length];
 
             int i = 0;
-            for (byte b:image.getBytes()) {
+            for (byte b : image.getBytes()) {
                 byteObject[i++] = b;
             }
 
